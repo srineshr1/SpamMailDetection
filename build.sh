@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -o errexit
-
-pip install --upgrade pip
-pip install --prefer-binary -r requirements.txt
-
+pip install -r requirements.txt
+python -c "import nltk; nltk.download('stopwords')"
 python manage.py collectstatic --no-input
 python manage.py migrate

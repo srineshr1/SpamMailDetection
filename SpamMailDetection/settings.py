@@ -8,7 +8,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET KEY - read from environment variable in production
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-changeme-replace-in-production')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'your-fallback-dev-key')
 
 # DEBUG - False in production
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
@@ -28,24 +28,15 @@ INSTALLED_APPS = [
 ]
 
 # CORS — allow your Vercel frontend
-CORS_ALLOWED_ORIGINS = os.environ.get(
-    'CORS_ALLOWED_ORIGINS',
-    'https://spam-mail-detection-phi.vercel.app'
-).split(',')
-
+ALLOWED_HOSTS = ['*']
 # Also allow all origins in development fallback
 CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS', 'False') == 'True'
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',          # Must be FIRST
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',     # Static files on Render
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ← add this
+    ...
 ]
 
 ROOT_URLCONF = 'SpamMailDetection.urls'
